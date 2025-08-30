@@ -35,12 +35,10 @@ for ticker in ticker_list:
     ticker_symbol = ticker[0]
     ref_ticker = yf.Ticker(ticker_symbol)
     data = ref_ticker.history(period="1d")
-    print(data)
 
     cursor = connection.cursor()
     
     table_name = ticker_symbol.replace("=", "")
-    print(table_name)
     
     try:
         for index, row in data.iterrows():

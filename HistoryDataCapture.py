@@ -2,7 +2,7 @@ import yfinance as yf
 import mysql.connector as mysql
 import settings as s
 
-asset_ticker = "EURUSD=X"
+asset_ticker = "BTC-USD"
 ref_ticker = yf.Ticker(asset_ticker)
 data = ref_ticker.history(period="max")
 print(data.columns)
@@ -19,6 +19,7 @@ if connection.is_connected:
 cursor = connection.cursor()
 
 table_name = asset_ticker.replace("=", "")
+table_name = asset_ticker.replace("-", "")
 print(table_name)
 
 try:
