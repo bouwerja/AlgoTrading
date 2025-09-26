@@ -3,9 +3,9 @@ import mysql.connector as mysql
 import settings as s
 
 asset_ticker = "GBPUSD=X"
-invertval = "1h"
+interval = "1h"
 ref_ticker = yf.Ticker(asset_ticker)
-data = ref_ticker.history(period="max", interval="1h")
+data = ref_ticker.history(period="max", interval=interval)
 print(data.columns)
 
 connection = mysql.connect(
@@ -23,7 +23,7 @@ table_name = asset_ticker.replace("=", "")
 table_name = table_name.replace("-", "")
 
 table_prefix = ""
-if interval = "1h":
+if interval == "1h":
     table_prefix = "OH"
 
 table_name = table_prefix + "_" + table_name
