@@ -2,24 +2,31 @@ import yfinance as yf
 import mysql.connector as mysql
 import settings as s
 
-asset_ticker = "BTC-USD"
+asset_ticker = "GBPUSD=X"
+invertval = "1h"
 ref_ticker = yf.Ticker(asset_ticker)
-data = ref_ticker.history(period="max")
+data = ref_ticker.history(period="max", interval="1h")
 print(data.columns)
 
 connection = mysql.connect(
-        host = s.DATABASE_HOSTNAME, 
-        user = s.ACTIVE_USERNAME,
-        password = s.ACTIVE_USER_PWD,
-        database = s.ACTIVE_DATABASE
-        )
+    host=s.DATABASE_HOSTNAME,
+    user=s.ACTIVE_USERNAME,
+    password=s.ACTIVE_USER_PWD,
+    database=s.ACTIVE_DATABASE,
+)
 if connection.is_connected:
     print("Connection Successful")
 
 cursor = connection.cursor()
 
 table_name = asset_ticker.replace("=", "")
-table_name = asset_ticker.replace("-", "")
+table_name = table_name.replace("-", "")
+
+table_prefix = ""
+if interval = "1h":
+    table_prefix = "OH"
+
+table_name = table_prefix + "_" + table_name
 print(table_name)
 
 try:
@@ -41,10 +48,18 @@ try:
             INSERT INTO {table_name} (PricingDate, Open, High, Low, Close, Volume)
             VALUES (%s, %s, %s, %s, %s, %s)
             """,
-            (index.to_pydatetime(), row['Open'], row['High'], row['Low'], row['Close'], row['Volume'])
+            (
+                index.to_pydatetime(),
+                row["Open"],
+                row["High"],
+                row["Low"],
+                row["Close"],
+                row["Volume"],
+            ),
         )
 
     connection.commit()
     print("Everything went well. Check the table")
 except Exception as e:
     print("Something failed with: ", e)
+
