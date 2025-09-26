@@ -17,10 +17,6 @@ else:
 try:
     cursor = connection.cursor()
 
-    # columns_query = "SHOW COLUMNS FROM Quant.BTCUSD;"
-    # cursor.execute(columns_query)
-    # columns = cursor.fetchone()
-
     select_query = "SELECT * FROM Quant.BTCUSD ORDER BY id ASC;"
     cursor.execute(select_query)
     data = cursor.fetchall()
