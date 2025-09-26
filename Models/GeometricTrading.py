@@ -17,17 +17,6 @@ for i, row in enumerate(full_data):
 print("Amount of dates: ", len(price_list))
 
 
-def cumm_Probabilities(p_trails=0):
-    prob_dict = {}
-    for i in range(p_trails):
-        if i == 0:
-            prob_dict[f"{i + 1}"] = geometric_prob(i)
-        else:
-            prob_dict[f"{i + 1}"] = geometric_prob(i) + prob_dict[f"{i}"]
-
-    return prob_dict
-
-
 def geometric_prob(trails):
     """
     Geometric Distribution
@@ -172,20 +161,3 @@ for i, row in enumerate(full_data):
                     print("Closed Trade: ")
                     print(portfolio_status)
             inter_list = []
-
-
-# plt.figure(dpi=150)
-# bars = plt.bar(cumm_prob.keys(), cumm_prob.values())
-# plt.title("Change in Price")
-#
-# for bar in bars:
-#     height = bar.get_height()
-#     plt.text(
-#         bar.get_x() + bar.get_width() / 2,
-#         height,
-#         f"{height:.2f}",
-#         ha="center",
-#         va="bottom",
-#     )
-#
-# plt.show()
